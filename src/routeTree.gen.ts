@@ -15,6 +15,9 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedReportNewRouteImport } from './routes/_authenticated/report.new'
+import { Route as AuthenticatedReportIdProcessingRouteImport } from './routes/_authenticated/report.$id.processing'
+import { Route as AuthenticatedReportIdEvidenceRouteImport } from './routes/_authenticated/report.$id.evidence'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -45,6 +48,23 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReportNewRoute = AuthenticatedReportNewRouteImport.update({
+  id: '/report/new',
+  path: '/report/new',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReportIdProcessingRoute =
+  AuthenticatedReportIdProcessingRouteImport.update({
+    id: '/report/$id/processing',
+    path: '/report/$id/processing',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportIdEvidenceRoute =
+  AuthenticatedReportIdEvidenceRouteImport.update({
+    id: '/report/$id/evidence',
+    path: '/report/$id/evidence',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +72,9 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/report/new': typeof AuthenticatedReportNewRoute
+  '/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
+  '/report/$id/processing': typeof AuthenticatedReportIdProcessingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +82,9 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/report/new': typeof AuthenticatedReportNewRoute
+  '/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
+  '/report/$id/processing': typeof AuthenticatedReportIdProcessingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +94,31 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/emergency': typeof AuthenticatedEmergencyRoute
+  '/_authenticated/report/new': typeof AuthenticatedReportNewRoute
+  '/_authenticated/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
+  '/_authenticated/report/$id/processing': typeof AuthenticatedReportIdProcessingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/reset-password' | '/dashboard' | '/emergency'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/dashboard'
+    | '/emergency'
+    | '/report/new'
+    | '/report/$id/evidence'
+    | '/report/$id/processing'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/reset-password' | '/dashboard' | '/emergency'
+  to:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/dashboard'
+    | '/emergency'
+    | '/report/new'
+    | '/report/$id/evidence'
+    | '/report/$id/processing'
   id:
     | '__root__'
     | '/'
@@ -82,6 +127,9 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/dashboard'
     | '/_authenticated/emergency'
+    | '/_authenticated/report/new'
+    | '/_authenticated/report/$id/evidence'
+    | '/_authenticated/report/$id/processing'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,17 +183,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/report/new': {
+      id: '/_authenticated/report/new'
+      path: '/report/new'
+      fullPath: '/report/new'
+      preLoaderRoute: typeof AuthenticatedReportNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/report/$id/processing': {
+      id: '/_authenticated/report/$id/processing'
+      path: '/report/$id/processing'
+      fullPath: '/report/$id/processing'
+      preLoaderRoute: typeof AuthenticatedReportIdProcessingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/report/$id/evidence': {
+      id: '/_authenticated/report/$id/evidence'
+      path: '/report/$id/evidence'
+      fullPath: '/report/$id/evidence'
+      preLoaderRoute: typeof AuthenticatedReportIdEvidenceRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEmergencyRoute: typeof AuthenticatedEmergencyRoute
+  AuthenticatedReportNewRoute: typeof AuthenticatedReportNewRoute
+  AuthenticatedReportIdEvidenceRoute: typeof AuthenticatedReportIdEvidenceRoute
+  AuthenticatedReportIdProcessingRoute: typeof AuthenticatedReportIdProcessingRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEmergencyRoute: AuthenticatedEmergencyRoute,
+  AuthenticatedReportNewRoute: AuthenticatedReportNewRoute,
+  AuthenticatedReportIdEvidenceRoute: AuthenticatedReportIdEvidenceRoute,
+  AuthenticatedReportIdProcessingRoute: AuthenticatedReportIdProcessingRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -160,13 +235,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
