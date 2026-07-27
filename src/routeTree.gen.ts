@@ -13,10 +13,13 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedReportNewRouteImport } from './routes/_authenticated/report.new'
+import { Route as AuthenticatedReportIdSuccessRouteImport } from './routes/_authenticated/report.$id.success'
 import { Route as AuthenticatedReportIdProcessingRouteImport } from './routes/_authenticated/report.$id.processing'
+import { Route as AuthenticatedReportIdPreviewRouteImport } from './routes/_authenticated/report.$id.preview'
 import { Route as AuthenticatedReportIdEvidenceRouteImport } from './routes/_authenticated/report.$id.evidence'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -38,6 +41,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedEmergencyRoute = AuthenticatedEmergencyRouteImport.update({
   id: '/emergency',
   path: '/emergency',
@@ -53,10 +61,22 @@ const AuthenticatedReportNewRoute = AuthenticatedReportNewRouteImport.update({
   path: '/report/new',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReportIdSuccessRoute =
+  AuthenticatedReportIdSuccessRouteImport.update({
+    id: '/report/$id/success',
+    path: '/report/$id/success',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedReportIdProcessingRoute =
   AuthenticatedReportIdProcessingRouteImport.update({
     id: '/report/$id/processing',
     path: '/report/$id/processing',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportIdPreviewRoute =
+  AuthenticatedReportIdPreviewRouteImport.update({
+    id: '/report/$id/preview',
+    path: '/report/$id/preview',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedReportIdEvidenceRoute =
@@ -72,9 +92,12 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/report/new': typeof AuthenticatedReportNewRoute
   '/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
+  '/report/$id/preview': typeof AuthenticatedReportIdPreviewRoute
   '/report/$id/processing': typeof AuthenticatedReportIdProcessingRoute
+  '/report/$id/success': typeof AuthenticatedReportIdSuccessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -82,9 +105,12 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/report/new': typeof AuthenticatedReportNewRoute
   '/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
+  '/report/$id/preview': typeof AuthenticatedReportIdPreviewRoute
   '/report/$id/processing': typeof AuthenticatedReportIdProcessingRoute
+  '/report/$id/success': typeof AuthenticatedReportIdSuccessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -94,9 +120,12 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/emergency': typeof AuthenticatedEmergencyRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/report/new': typeof AuthenticatedReportNewRoute
   '/_authenticated/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
+  '/_authenticated/report/$id/preview': typeof AuthenticatedReportIdPreviewRoute
   '/_authenticated/report/$id/processing': typeof AuthenticatedReportIdProcessingRoute
+  '/_authenticated/report/$id/success': typeof AuthenticatedReportIdSuccessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -106,9 +135,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/dashboard'
     | '/emergency'
+    | '/reports'
     | '/report/new'
     | '/report/$id/evidence'
+    | '/report/$id/preview'
     | '/report/$id/processing'
+    | '/report/$id/success'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -116,9 +148,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/dashboard'
     | '/emergency'
+    | '/reports'
     | '/report/new'
     | '/report/$id/evidence'
+    | '/report/$id/preview'
     | '/report/$id/processing'
+    | '/report/$id/success'
   id:
     | '__root__'
     | '/'
@@ -127,9 +162,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/dashboard'
     | '/_authenticated/emergency'
+    | '/_authenticated/reports'
     | '/_authenticated/report/new'
     | '/_authenticated/report/$id/evidence'
+    | '/_authenticated/report/$id/preview'
     | '/_authenticated/report/$id/processing'
+    | '/_authenticated/report/$id/success'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -169,6 +207,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/emergency': {
       id: '/_authenticated/emergency'
       path: '/emergency'
@@ -190,11 +235,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReportNewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/report/$id/success': {
+      id: '/_authenticated/report/$id/success'
+      path: '/report/$id/success'
+      fullPath: '/report/$id/success'
+      preLoaderRoute: typeof AuthenticatedReportIdSuccessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/report/$id/processing': {
       id: '/_authenticated/report/$id/processing'
       path: '/report/$id/processing'
       fullPath: '/report/$id/processing'
       preLoaderRoute: typeof AuthenticatedReportIdProcessingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/report/$id/preview': {
+      id: '/_authenticated/report/$id/preview'
+      path: '/report/$id/preview'
+      fullPath: '/report/$id/preview'
+      preLoaderRoute: typeof AuthenticatedReportIdPreviewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/report/$id/evidence': {
@@ -210,17 +269,23 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEmergencyRoute: typeof AuthenticatedEmergencyRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedReportNewRoute: typeof AuthenticatedReportNewRoute
   AuthenticatedReportIdEvidenceRoute: typeof AuthenticatedReportIdEvidenceRoute
+  AuthenticatedReportIdPreviewRoute: typeof AuthenticatedReportIdPreviewRoute
   AuthenticatedReportIdProcessingRoute: typeof AuthenticatedReportIdProcessingRoute
+  AuthenticatedReportIdSuccessRoute: typeof AuthenticatedReportIdSuccessRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEmergencyRoute: AuthenticatedEmergencyRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedReportNewRoute: AuthenticatedReportNewRoute,
   AuthenticatedReportIdEvidenceRoute: AuthenticatedReportIdEvidenceRoute,
+  AuthenticatedReportIdPreviewRoute: AuthenticatedReportIdPreviewRoute,
   AuthenticatedReportIdProcessingRoute: AuthenticatedReportIdProcessingRoute,
+  AuthenticatedReportIdSuccessRoute: AuthenticatedReportIdSuccessRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
