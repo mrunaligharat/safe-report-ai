@@ -51,7 +51,7 @@ function AuthPage() {
         if (error) throw error;
         navigate({ to: "/dashboard" });
       } else if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -60,6 +60,11 @@ function AuthPage() {
           },
         });
         if (error) throw error;
+        if (!data.session) {
+          toast.success("Account created. Check your email to confirm, then sign in.");
+          setMode("login");
+          return;
+        }
         toast.success("Account created. You can start reporting now.");
         navigate({ to: "/dashboard" });
       } else {
