@@ -14,7 +14,142 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      complaints: {
+        Row: {
+          created_at: string
+          generated_text: string
+          id: string
+          incident_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          generated_text: string
+          id?: string
+          incident_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          generated_text?: string
+          id?: string
+          incident_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "complaints_incident_id_fkey"
+            columns: ["incident_id"]
+            isOneToOne: false
+            referencedRelation: "incidents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      evidence: {
+        Row: {
+          file_name: string | null
+          file_path: string
+          file_type: string | null
+          file_url: string | null
+          id: string
+          incident_id: string
+          uploaded_at: string
+          user_id: string
+        }
+        Insert: {
+          file_name?: string | null
+          file_path: string
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          incident_id: string
+          uploaded_at?: string
+          user_id: string
+        }
+        Update: {
+          file_name?: string | null
+          file_path?: string
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          incident_id?: string
+          uploaded_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evidence_incident_id_fkey"
+            columns: ["incident_id"]
+            isOneToOne: false
+            referencedRelation: "incidents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      incidents: {
+        Row: {
+          category: Database["public"]["Enums"]["incident_category"]
+          created_at: string
+          description: string
+          id: string
+          incident_date: string
+          location: string | null
+          status: Database["public"]["Enums"]["incident_status"]
+          title: string
+          tracking_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["incident_category"]
+          created_at?: string
+          description?: string
+          id?: string
+          incident_date?: string
+          location?: string | null
+          status?: Database["public"]["Enums"]["incident_status"]
+          title: string
+          tracking_id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["incident_category"]
+          created_at?: string
+          description?: string
+          id?: string
+          incident_date?: string
+          location?: string | null
+          status?: Database["public"]["Enums"]["incident_status"]
+          title?: string
+          tracking_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +158,19 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      incident_category:
+        | "harassment"
+        | "stalking"
+        | "theft"
+        | "cybercrime"
+        | "accident"
+        | "other"
+      incident_status:
+        | "submitted"
+        | "under_review"
+        | "investigating"
+        | "closed"
+        | "draft"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +297,22 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      incident_category: [
+        "harassment",
+        "stalking",
+        "theft",
+        "cybercrime",
+        "accident",
+        "other",
+      ],
+      incident_status: [
+        "submitted",
+        "under_review",
+        "investigating",
+        "closed",
+        "draft",
+      ],
+    },
   },
 } as const
