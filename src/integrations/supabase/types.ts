@@ -135,18 +135,21 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          role: string
         }
         Insert: {
           created_at?: string
           email?: string | null
           full_name?: string | null
           id: string
+          role?: string
         }
         Update: {
           created_at?: string
           email?: string | null
           full_name?: string | null
           id?: string
+          role?: string
         }
         Relationships: []
       }
@@ -155,7 +158,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       incident_category:

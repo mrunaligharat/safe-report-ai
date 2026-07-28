@@ -13,10 +13,14 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AdminAdminDashboardRouteImport } from './routes/_admin/admin.dashboard'
+import { Route as AdminAdminUsersRouteImport } from './routes/_admin/admin.users'
+import { Route as AdminAdminIncidentsRouteImport } from './routes/_admin/admin.incidents'
 import { Route as AuthenticatedReportNewRouteImport } from './routes/_authenticated/report.new'
 import { Route as AuthenticatedReportIdSuccessRouteImport } from './routes/_authenticated/report.$id.success'
 import { Route as AuthenticatedReportIdProcessingRouteImport } from './routes/_authenticated/report.$id.processing'
@@ -42,6 +46,10 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/_admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,6 +69,21 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AdminAdminDashboardRoute = AdminAdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminIncidentsRoute = AdminAdminIncidentsRouteImport.update({
+  id: '/admin/incidents',
+  path: '/admin/incidents',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const AuthenticatedReportNewRoute = AuthenticatedReportNewRouteImport.update({
   id: '/report/new',
@@ -100,6 +123,9 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
   '/reports': typeof AuthenticatedReportsRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/admin/users': typeof AdminAdminUsersRoute
+  '/admin/incidents': typeof AdminAdminIncidentsRoute
   '/report/new': typeof AuthenticatedReportNewRoute
   '/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
   '/report/$id/preview': typeof AuthenticatedReportIdPreviewRoute
@@ -114,6 +140,9 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
   '/reports': typeof AuthenticatedReportsRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/admin/users': typeof AdminAdminUsersRoute
+  '/admin/incidents': typeof AdminAdminIncidentsRoute
   '/report/new': typeof AuthenticatedReportNewRoute
   '/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
   '/report/$id/preview': typeof AuthenticatedReportIdPreviewRoute
@@ -124,12 +153,16 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_admin': typeof AdminRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/emergency': typeof AuthenticatedEmergencyRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_admin/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/_admin/admin/users': typeof AdminAdminUsersRoute
+  '/_admin/admin/incidents': typeof AdminAdminIncidentsRoute
   '/_authenticated/report/new': typeof AuthenticatedReportNewRoute
   '/_authenticated/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
   '/_authenticated/report/$id/preview': typeof AuthenticatedReportIdPreviewRoute
@@ -146,6 +179,9 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/emergency'
     | '/reports'
+    | '/admin/dashboard'
+    | '/admin/users'
+    | '/admin/incidents'
     | '/report/new'
     | '/report/$id/evidence'
     | '/report/$id/preview'
@@ -160,6 +196,9 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/emergency'
     | '/reports'
+    | '/admin/dashboard'
+    | '/admin/users'
+    | '/admin/incidents'
     | '/report/new'
     | '/report/$id/evidence'
     | '/report/$id/preview'
@@ -169,12 +208,16 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/_admin'
     | '/auth'
     | '/reset-password'
     | '/sitemap.xml'
     | '/_authenticated/dashboard'
     | '/_authenticated/emergency'
     | '/_authenticated/reports'
+    | '/_admin/admin/dashboard'
+    | '/_admin/admin/users'
+    | '/_admin/admin/incidents'
     | '/_authenticated/report/new'
     | '/_authenticated/report/$id/evidence'
     | '/_authenticated/report/$id/preview'
@@ -185,6 +228,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -220,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -247,6 +298,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_admin/admin/dashboard': {
+      id: '/_admin/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminAdminDashboardRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/users': {
+      id: '/_admin/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminAdminUsersRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/incidents': {
+      id: '/_admin/admin/incidents'
+      path: '/admin/incidents'
+      fullPath: '/admin/incidents'
+      preLoaderRoute: typeof AdminAdminIncidentsRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/_authenticated/report/new': {
       id: '/_authenticated/report/new'
@@ -311,9 +383,25 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface AdminRouteRouteChildren {
+  AdminAdminDashboardRoute: typeof AdminAdminDashboardRoute
+  AdminAdminUsersRoute: typeof AdminAdminUsersRoute
+  AdminAdminIncidentsRoute: typeof AdminAdminIncidentsRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAdminDashboardRoute: AdminAdminDashboardRoute,
+  AdminAdminUsersRoute: AdminAdminUsersRoute,
+  AdminAdminIncidentsRoute: AdminAdminIncidentsRoute,
+}
+
+const AdminRouteRouteWithChildren =
+  AdminRouteRoute._addFileChildren(AdminRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

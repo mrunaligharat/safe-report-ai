@@ -1,8 +1,10 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { FilePlus2, LayoutDashboard, ListChecks, LogOut, ShieldCheck } from "lucide-react";
+import { FilePlus2, LayoutDashboard, ListChecks, LogOut, Shield, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { getCurrentUserRole } from "@/lib/admin";
 
 export function Logo({ size = 40 }: { size?: number }) {
   return (
@@ -31,6 +33,13 @@ export function AppShell({
   children: ReactNode;
 }) {
   const navigate = useNavigate();
+  const { data: role } = useQuery({
+    queryKey: ["user-role"],
+    queryFn: getCurrentUserRole,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const isAdmin = role === "admin" || role === "super_admin";
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -57,6 +66,18 @@ export function AppShell({
                   {item.label}
                 </Link>
               ))}
+              {isAdmin && (
+                <Link
+                  to="/admin/dashboard"
+                  className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  activeProps={{ className: "bg-accent text-accent-foreground" }}
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Shield className="h-3.5 w-3.5" />
+                    Admin
+                  </span>
+                </Link>
+              )}
             </nav>
             <Button variant="ghost" size="icon" onClick={signOut} aria-label="Sign out">
               <LogOut className="h-4 w-4" />

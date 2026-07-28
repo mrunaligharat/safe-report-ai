@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/lib/auth";
+import { getCurrentUserRole } from "@/lib/admin";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -39,7 +40,15 @@ function AuthPage() {
   const { user, loading } = useAuth();
 
   useEffect(() => {
-    if (!loading && user) navigate({ to: "/dashboard", replace: true });
+    if (!loading && user) {
+      getCurrentUserRole().then((role) => {
+        if (role === "admin" || role === "super_admin") {
+          navigate({ to: "/admin/dashboard", replace: true });
+        } else {
+          navigate({ to: "/dashboard", replace: true });
+        }
+      });
+    }
   }, [user, loading, navigate]);
 
   const submit = async (e: React.FormEvent) => {
@@ -49,7 +58,12 @@ function AuthPage() {
       if (mode === "login") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        navigate({ to: "/dashboard" });
+        const role = await getCurrentUserRole();
+        if (role === "admin" || role === "super_admin") {
+          navigate({ to: "/admin/dashboard" });
+        } else {
+          navigate({ to: "/dashboard" });
+        }
       } else if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({
           email,
