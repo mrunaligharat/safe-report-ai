@@ -10,7 +10,10 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
       { title: "Dashboard — SafeReport AI" },
-      { name: "description", content: "See your reporting activity and start a new incident report." },
+      {
+        name: "description",
+        content: "See your reporting activity and start a new incident report.",
+      },
       { property: "og:title", content: "Dashboard — SafeReport AI" },
       { property: "og:description", content: "Your incident reporting overview." },
     ],

@@ -99,7 +99,9 @@ export function FileUpload({
                   <p className="text-xs text-muted-foreground">
                     {(item.file.size / 1024 / 1024).toFixed(2)} MB
                   </p>
-                  {item.progress > 0 ? <Progress value={item.progress} className="mt-2 h-1.5" /> : null}
+                  {item.progress > 0 ? (
+                    <Progress value={item.progress} className="mt-2 h-1.5" />
+                  ) : null}
                 </div>
                 <Button
                   variant="ghost"

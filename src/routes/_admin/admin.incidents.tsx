@@ -37,8 +37,13 @@ function AdminIncidents() {
   });
 
   const mutation = useMutation({
-    mutationFn: ({ id, status }: { id: string; status: "submitted" | "under_review" | "investigating" | "closed" | "draft" }) =>
-      updateIncidentStatus(id, status),
+    mutationFn: ({
+      id,
+      status,
+    }: {
+      id: string;
+      status: "submitted" | "under_review" | "investigating" | "closed" | "draft";
+    }) => updateIncidentStatus(id, status),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-incidents"] });
       queryClient.invalidateQueries({ queryKey: ["admin-stats"] });
@@ -54,10 +59,8 @@ function AdminIncidents() {
       !search ||
       incident.title?.toLowerCase().includes(search.toLowerCase()) ||
       incident.tracking_id?.toLowerCase().includes(search.toLowerCase());
-    const matchesStatus =
-      statusFilter === "all" || incident.status === statusFilter;
-    const matchesCategory =
-      categoryFilter === "all" || incident.category === categoryFilter;
+    const matchesStatus = statusFilter === "all" || incident.status === statusFilter;
+    const matchesCategory = categoryFilter === "all" || incident.category === categoryFilter;
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
@@ -112,18 +115,10 @@ function AdminIncidents() {
                 <th className="px-4 py-3 text-left font-medium text-muted-foreground">
                   Tracking ID
                 </th>
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-                  Title
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-                  Category
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-                  Status
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-                  Date
-                </th>
+                <th className="px-4 py-3 text-left font-medium text-muted-foreground">Title</th>
+                <th className="px-4 py-3 text-left font-medium text-muted-foreground">Category</th>
+                <th className="px-4 py-3 text-left font-medium text-muted-foreground">Status</th>
+                <th className="px-4 py-3 text-left font-medium text-muted-foreground">Date</th>
                 <th className="px-4 py-3 text-left font-medium text-muted-foreground">
                   Update Status
                 </th>
@@ -131,16 +126,9 @@ function AdminIncidents() {
             </thead>
             <tbody>
               {filtered.map((incident) => (
-                <tr
-                  key={incident.id}
-                  className="border-b border-border/30 last:border-0"
-                >
-                  <td className="px-4 py-3 font-mono text-xs">
-                    {incident.tracking_id}
-                  </td>
-                  <td className="max-w-[200px] truncate px-4 py-3 font-medium">
-                    {incident.title}
-                  </td>
+                <tr key={incident.id} className="border-b border-border/30 last:border-0">
+                  <td className="px-4 py-3 font-mono text-xs">{incident.tracking_id}</td>
+                  <td className="max-w-[200px] truncate px-4 py-3 font-medium">{incident.title}</td>
                   <td className="px-4 py-3 text-muted-foreground">
                     {categoryLabel(incident.category)}
                   </td>
@@ -154,28 +142,22 @@ function AdminIncidents() {
                     <Select
                       value={incident.status}
                       onValueChange={(val) =>
-                        mutation.mutate({ id: incident.id, status: val as "submitted" | "under_review" | "investigating" | "closed" | "draft" })
+                        mutation.mutate({
+                          id: incident.id,
+                          status: val as
+                            "submitted" | "under_review" | "investigating" | "closed" | "draft",
+                        })
                       }
                     >
                       <SelectTrigger className="h-8 w-36 rounded-lg text-xs">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="draft">
-                          {STATUS_LABEL.draft}
-                        </SelectItem>
-                        <SelectItem value="submitted">
-                          {STATUS_LABEL.submitted}
-                        </SelectItem>
-                        <SelectItem value="under_review">
-                          {STATUS_LABEL.under_review}
-                        </SelectItem>
-                        <SelectItem value="investigating">
-                          {STATUS_LABEL.investigating}
-                        </SelectItem>
-                        <SelectItem value="closed">
-                          {STATUS_LABEL.closed}
-                        </SelectItem>
+                        <SelectItem value="draft">{STATUS_LABEL.draft}</SelectItem>
+                        <SelectItem value="submitted">{STATUS_LABEL.submitted}</SelectItem>
+                        <SelectItem value="under_review">{STATUS_LABEL.under_review}</SelectItem>
+                        <SelectItem value="investigating">{STATUS_LABEL.investigating}</SelectItem>
+                        <SelectItem value="closed">{STATUS_LABEL.closed}</SelectItem>
                       </SelectContent>
                     </Select>
                   </td>
@@ -184,9 +166,7 @@ function AdminIncidents() {
             </tbody>
           </table>
           {filtered.length === 0 && (
-            <p className="p-6 text-center text-sm text-muted-foreground">
-              No incidents found.
-            </p>
+            <p className="p-6 text-center text-sm text-muted-foreground">No incidents found.</p>
           )}
         </div>
       )}

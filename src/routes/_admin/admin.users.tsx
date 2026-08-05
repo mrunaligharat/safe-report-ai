@@ -95,35 +95,18 @@ function AdminUsers() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border/60 bg-muted/30">
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-                  Name
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-                  Email
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-                  Role
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-                  Joined
-                </th>
-                <th className="px-4 py-3 text-left font-medium text-muted-foreground">
-                  Actions
-                </th>
+                <th className="px-4 py-3 text-left font-medium text-muted-foreground">Name</th>
+                <th className="px-4 py-3 text-left font-medium text-muted-foreground">Email</th>
+                <th className="px-4 py-3 text-left font-medium text-muted-foreground">Role</th>
+                <th className="px-4 py-3 text-left font-medium text-muted-foreground">Joined</th>
+                <th className="px-4 py-3 text-left font-medium text-muted-foreground">Actions</th>
               </tr>
             </thead>
             <tbody>
               {filtered.map((profile: UserProfile) => (
-                <tr
-                  key={profile.id}
-                  className="border-b border-border/30 last:border-0"
-                >
-                  <td className="px-4 py-3 font-medium">
-                    {profile.full_name || "—"}
-                  </td>
-                  <td className="px-4 py-3 text-muted-foreground">
-                    {profile.email || "—"}
-                  </td>
+                <tr key={profile.id} className="border-b border-border/30 last:border-0">
+                  <td className="px-4 py-3 font-medium">{profile.full_name || "—"}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{profile.email || "—"}</td>
                   <td className="px-4 py-3">
                     <span
                       className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
@@ -150,9 +133,7 @@ function AdminUsers() {
                     ) : (
                       <Select
                         value={profile.role}
-                        onValueChange={(val) =>
-                          handleRoleChange(profile.id, val as UserRole)
-                        }
+                        onValueChange={(val) => handleRoleChange(profile.id, val as UserRole)}
                       >
                         <SelectTrigger className="h-8 w-32 rounded-lg text-xs">
                           <SelectValue />
@@ -170,9 +151,7 @@ function AdminUsers() {
             </tbody>
           </table>
           {filtered.length === 0 && (
-            <p className="p-6 text-center text-sm text-muted-foreground">
-              No users found.
-            </p>
+            <p className="p-6 text-center text-sm text-muted-foreground">No users found.</p>
           )}
         </div>
       )}

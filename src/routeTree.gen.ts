@@ -9,32 +9,36 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
-import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
+import { Route as AdminRouteRouteImport } from './routes/_admin/route'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AdminAdminDashboardRouteImport } from './routes/_admin/admin.dashboard'
-import { Route as AdminAdminUsersRouteImport } from './routes/_admin/admin.users'
 import { Route as AdminAdminIncidentsRouteImport } from './routes/_admin/admin.incidents'
+import { Route as AdminAdminUsersRouteImport } from './routes/_admin/admin.users'
 import { Route as AuthenticatedReportNewRouteImport } from './routes/_authenticated/report.new'
-import { Route as AuthenticatedReportIdSuccessRouteImport } from './routes/_authenticated/report.$id.success'
-import { Route as AuthenticatedReportIdProcessingRouteImport } from './routes/_authenticated/report.$id.processing'
-import { Route as AuthenticatedReportIdPreviewRouteImport } from './routes/_authenticated/report.$id.preview'
 import { Route as AuthenticatedReportIdEvidenceRouteImport } from './routes/_authenticated/report.$id.evidence'
+import { Route as AuthenticatedReportIdPreviewRouteImport } from './routes/_authenticated/report.$id.preview'
+import { Route as AuthenticatedReportIdProcessingRouteImport } from './routes/_authenticated/report.$id.processing'
+import { Route as AuthenticatedReportIdSuccessRouteImport } from './routes/_authenticated/report.$id.success'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/_admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -42,22 +46,19 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminRouteRoute = AdminRouteRouteImport.update({
-  id: '/_admin',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedEmergencyRoute = AuthenticatedEmergencyRouteImport.update({
@@ -65,9 +66,14 @@ const AuthenticatedEmergencyRoute = AuthenticatedEmergencyRouteImport.update({
   path: '/emergency',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AdminAdminDashboardRoute = AdminAdminDashboardRouteImport.update({
@@ -75,14 +81,14 @@ const AdminAdminDashboardRoute = AdminAdminDashboardRouteImport.update({
   path: '/admin/dashboard',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
 const AdminAdminIncidentsRoute = AdminAdminIncidentsRouteImport.update({
   id: '/admin/incidents',
   path: '/admin/incidents',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AuthenticatedReportNewRoute = AuthenticatedReportNewRouteImport.update({
@@ -90,16 +96,10 @@ const AuthenticatedReportNewRoute = AuthenticatedReportNewRouteImport.update({
   path: '/report/new',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedReportIdSuccessRoute =
-  AuthenticatedReportIdSuccessRouteImport.update({
-    id: '/report/$id/success',
-    path: '/report/$id/success',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedReportIdProcessingRoute =
-  AuthenticatedReportIdProcessingRouteImport.update({
-    id: '/report/$id/processing',
-    path: '/report/$id/processing',
+const AuthenticatedReportIdEvidenceRoute =
+  AuthenticatedReportIdEvidenceRouteImport.update({
+    id: '/report/$id/evidence',
+    path: '/report/$id/evidence',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedReportIdPreviewRoute =
@@ -108,10 +108,16 @@ const AuthenticatedReportIdPreviewRoute =
     path: '/report/$id/preview',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedReportIdEvidenceRoute =
-  AuthenticatedReportIdEvidenceRouteImport.update({
-    id: '/report/$id/evidence',
-    path: '/report/$id/evidence',
+const AuthenticatedReportIdProcessingRoute =
+  AuthenticatedReportIdProcessingRouteImport.update({
+    id: '/report/$id/processing',
+    path: '/report/$id/processing',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportIdSuccessRoute =
+  AuthenticatedReportIdSuccessRouteImport.update({
+    id: '/report/$id/success',
+    path: '/report/$id/success',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -122,10 +128,11 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/admin/dashboard': typeof AdminAdminDashboardRoute
-  '/admin/users': typeof AdminAdminUsersRoute
   '/admin/incidents': typeof AdminAdminIncidentsRoute
+  '/admin/users': typeof AdminAdminUsersRoute
   '/report/new': typeof AuthenticatedReportNewRoute
   '/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
   '/report/$id/preview': typeof AuthenticatedReportIdPreviewRoute
@@ -139,10 +146,11 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/admin/dashboard': typeof AdminAdminDashboardRoute
-  '/admin/users': typeof AdminAdminUsersRoute
   '/admin/incidents': typeof AdminAdminIncidentsRoute
+  '/admin/users': typeof AdminAdminUsersRoute
   '/report/new': typeof AuthenticatedReportNewRoute
   '/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
   '/report/$id/preview': typeof AuthenticatedReportIdPreviewRoute
@@ -152,17 +160,18 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_admin': typeof AdminRouteRouteWithChildren
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/emergency': typeof AuthenticatedEmergencyRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_admin/admin/dashboard': typeof AdminAdminDashboardRoute
-  '/_admin/admin/users': typeof AdminAdminUsersRoute
   '/_admin/admin/incidents': typeof AdminAdminIncidentsRoute
+  '/_admin/admin/users': typeof AdminAdminUsersRoute
   '/_authenticated/report/new': typeof AuthenticatedReportNewRoute
   '/_authenticated/report/$id/evidence': typeof AuthenticatedReportIdEvidenceRoute
   '/_authenticated/report/$id/preview': typeof AuthenticatedReportIdPreviewRoute
@@ -178,10 +187,11 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/dashboard'
     | '/emergency'
+    | '/profile'
     | '/reports'
     | '/admin/dashboard'
-    | '/admin/users'
     | '/admin/incidents'
+    | '/admin/users'
     | '/report/new'
     | '/report/$id/evidence'
     | '/report/$id/preview'
@@ -195,10 +205,11 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/dashboard'
     | '/emergency'
+    | '/profile'
     | '/reports'
     | '/admin/dashboard'
-    | '/admin/users'
     | '/admin/incidents'
+    | '/admin/users'
     | '/report/new'
     | '/report/$id/evidence'
     | '/report/$id/preview'
@@ -207,17 +218,18 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/_authenticated'
     | '/_admin'
+    | '/_authenticated'
     | '/auth'
     | '/reset-password'
     | '/sitemap.xml'
     | '/_authenticated/dashboard'
     | '/_authenticated/emergency'
+    | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_admin/admin/dashboard'
-    | '/_admin/admin/users'
     | '/_admin/admin/incidents'
+    | '/_admin/admin/users'
     | '/_authenticated/report/new'
     | '/_authenticated/report/$id/evidence'
     | '/_authenticated/report/$id/preview'
@@ -227,8 +239,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -236,32 +248,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
+    '/': {
+      id: '/'
+      path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_admin': {
@@ -271,18 +262,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/reports': {
-      id: '/_authenticated/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/emergency': {
@@ -292,11 +304,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmergencyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_admin/admin/dashboard': {
@@ -306,18 +325,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminDashboardRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/_admin/admin/users': {
-      id: '/_admin/admin/users'
-      path: '/admin/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminAdminUsersRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
     '/_admin/admin/incidents': {
       id: '/_admin/admin/incidents'
       path: '/admin/incidents'
       fullPath: '/admin/incidents'
       preLoaderRoute: typeof AdminAdminIncidentsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/users': {
+      id: '/_admin/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminAdminUsersRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/_authenticated/report/new': {
@@ -327,18 +346,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReportNewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/report/$id/success': {
-      id: '/_authenticated/report/$id/success'
-      path: '/report/$id/success'
-      fullPath: '/report/$id/success'
-      preLoaderRoute: typeof AuthenticatedReportIdSuccessRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/report/$id/processing': {
-      id: '/_authenticated/report/$id/processing'
-      path: '/report/$id/processing'
-      fullPath: '/report/$id/processing'
-      preLoaderRoute: typeof AuthenticatedReportIdProcessingRouteImport
+    '/_authenticated/report/$id/evidence': {
+      id: '/_authenticated/report/$id/evidence'
+      path: '/report/$id/evidence'
+      fullPath: '/report/$id/evidence'
+      preLoaderRoute: typeof AuthenticatedReportIdEvidenceRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/report/$id/preview': {
@@ -348,19 +360,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReportIdPreviewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/report/$id/evidence': {
-      id: '/_authenticated/report/$id/evidence'
-      path: '/report/$id/evidence'
-      fullPath: '/report/$id/evidence'
-      preLoaderRoute: typeof AuthenticatedReportIdEvidenceRouteImport
+    '/_authenticated/report/$id/processing': {
+      id: '/_authenticated/report/$id/processing'
+      path: '/report/$id/processing'
+      fullPath: '/report/$id/processing'
+      preLoaderRoute: typeof AuthenticatedReportIdProcessingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/report/$id/success': {
+      id: '/_authenticated/report/$id/success'
+      path: '/report/$id/success'
+      fullPath: '/report/$id/success'
+      preLoaderRoute: typeof AuthenticatedReportIdSuccessRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminAdminDashboardRoute: typeof AdminAdminDashboardRoute
+  AdminAdminIncidentsRoute: typeof AdminAdminIncidentsRoute
+  AdminAdminUsersRoute: typeof AdminAdminUsersRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAdminDashboardRoute: AdminAdminDashboardRoute,
+  AdminAdminIncidentsRoute: AdminAdminIncidentsRoute,
+  AdminAdminUsersRoute: AdminAdminUsersRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEmergencyRoute: typeof AuthenticatedEmergencyRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedReportNewRoute: typeof AuthenticatedReportNewRoute
   AuthenticatedReportIdEvidenceRoute: typeof AuthenticatedReportIdEvidenceRoute
@@ -372,6 +408,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEmergencyRoute: AuthenticatedEmergencyRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedReportNewRoute: AuthenticatedReportNewRoute,
   AuthenticatedReportIdEvidenceRoute: AuthenticatedReportIdEvidenceRoute,
@@ -383,25 +420,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface AdminRouteRouteChildren {
-  AdminAdminDashboardRoute: typeof AdminAdminDashboardRoute
-  AdminAdminUsersRoute: typeof AdminAdminUsersRoute
-  AdminAdminIncidentsRoute: typeof AdminAdminIncidentsRoute
-}
-
-const AdminRouteRouteChildren: AdminRouteRouteChildren = {
-  AdminAdminDashboardRoute: AdminAdminDashboardRoute,
-  AdminAdminUsersRoute: AdminAdminUsersRoute,
-  AdminAdminIncidentsRoute: AdminAdminIncidentsRoute,
-}
-
-const AdminRouteRouteWithChildren =
-  AdminRouteRoute._addFileChildren(AdminRouteRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -409,3 +431,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

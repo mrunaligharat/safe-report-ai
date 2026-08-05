@@ -66,10 +66,7 @@ function AdminDashboard() {
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           {statCards.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl bg-card p-5 shadow-card"
-            >
+            <div key={stat.label} className="rounded-2xl bg-card p-5 shadow-card">
               <div className="flex items-center gap-3">
                 <span
                   className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${stat.color}`}

@@ -1,12 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import {
-  LayoutDashboard,
-  Users,
-  FileText,
-  Shield,
-  LogOut,
-  ShieldCheck,
-} from "lucide-react";
+import { LayoutDashboard, Users, FileText, Shield, LogOut, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -50,8 +43,7 @@ export function AdminShell({
               to={item.to}
               className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
               activeProps={{
-                className:
-                  "bg-primary/10 text-primary hover:bg-primary/10 hover:text-primary",
+                className: "bg-primary/10 text-primary hover:bg-primary/10 hover:text-primary",
               }}
             >
               <item.icon className="h-4 w-4" />
@@ -99,9 +91,7 @@ export function AdminShell({
           {title ? (
             <div className="mb-6">
               <h1 className="text-2xl font-semibold sm:text-3xl">{title}</h1>
-              {subtitle ? (
-                <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
-              ) : null}
+              {subtitle ? <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p> : null}
             </div>
           ) : null}
           {children}

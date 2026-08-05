@@ -183,7 +183,11 @@ function AuthPage() {
               disabled={busy}
               className="h-12 w-full rounded-2xl text-base shadow-float"
             >
-              {mode === "login" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset link"}
+              {mode === "login"
+                ? "Sign in"
+                : mode === "signup"
+                  ? "Create account"
+                  : "Send reset link"}
             </Button>
           </form>
 

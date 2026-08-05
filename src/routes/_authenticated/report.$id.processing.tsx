@@ -11,9 +11,15 @@ export const Route = createFileRoute("/_authenticated/report/$id/processing")({
   head: () => ({
     meta: [
       { title: "Generating your complaint — SafeReport AI" },
-      { name: "description", content: "SafeReport AI is drafting a structured complaint from your report." },
+      {
+        name: "description",
+        content: "SafeReport AI is drafting a structured complaint from your report.",
+      },
       { property: "og:title", content: "Generating your complaint — SafeReport AI" },
-      { property: "og:description", content: "AI turns your incident details into a formal complaint." },
+      {
+        property: "og:description",
+        content: "AI turns your incident details into a formal complaint.",
+      },
     ],
   }),
   component: Processing,

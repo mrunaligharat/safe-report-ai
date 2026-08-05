@@ -79,7 +79,8 @@ function Reports() {
                     <p className="truncate font-display font-semibold">{incident.title}</p>
                     <p className="mt-1 text-xs text-muted-foreground">
                       {categoryLabel(incident.category)} ·{" "}
-                      {new Date(incident.incident_date).toLocaleDateString()} · {incident.tracking_id}
+                      {new Date(incident.incident_date).toLocaleDateString()} ·{" "}
+                      {incident.tracking_id}
                     </p>
                   </div>
                   <StatusBadge status={incident.status} />

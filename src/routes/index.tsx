@@ -24,9 +24,21 @@ export const Route = createFileRoute("/")({
 });
 
 const highlights = [
-  { icon: Sparkles, title: "AI complaint drafting", text: "Your story, structured for authorities." },
-  { icon: Lock, title: "Private by design", text: "Evidence is encrypted and only visible to you." },
-  { icon: FileText, title: "Track every case", text: "Follow your report from submitted to closed." },
+  {
+    icon: Sparkles,
+    title: "AI complaint drafting",
+    text: "Your story, structured for authorities.",
+  },
+  {
+    icon: Lock,
+    title: "Private by design",
+    text: "Evidence is encrypted and only visible to you.",
+  },
+  {
+    icon: FileText,
+    title: "Track every case",
+    text: "Follow your report from submitted to closed.",
+  },
 ];
 
 function Splash() {

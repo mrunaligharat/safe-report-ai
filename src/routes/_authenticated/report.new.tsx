@@ -10,12 +10,16 @@ import { CATEGORIES, type CategoryValue } from "@/lib/incidents";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { VoiceRecorder } from "@/components/VoiceRecorder";
 
 export const Route = createFileRoute("/_authenticated/report/new")({
   head: () => ({
     meta: [
       { title: "Create incident report — SafeReport AI" },
-      { name: "description", content: "Describe what happened, where and when. We handle the paperwork." },
+      {
+        name: "description",
+        content: "Describe what happened, where and when. We handle the paperwork.",
+      },
       { property: "og:title", content: "Create incident report — SafeReport AI" },
       { property: "og:description", content: "Start a guided incident report in minutes." },
     ],
@@ -97,7 +101,13 @@ function NewReport() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="description">What happened?</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="description">What happened?</Label>
+            <VoiceRecorder
+              onTranscript={(text) => setDescription((prev) => (prev ? prev + " " + text : text))}
+              disabled={busy}
+            />
+          </div>
           <Textarea
             id="description"
             required

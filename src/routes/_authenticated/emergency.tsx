@@ -23,7 +23,10 @@ const contacts = [
 
 function Emergency() {
   return (
-    <AppShell title="Emergency help" subtitle="If you are in immediate danger, call first — report later.">
+    <AppShell
+      title="Emergency help"
+      subtitle="If you are in immediate danger, call first — report later."
+    >
       <div className="rounded-3xl bg-destructive/10 p-5 text-sm text-foreground shadow-soft">
         Move to a safe, public place if you can. Tell someone you trust where you are.
       </div>

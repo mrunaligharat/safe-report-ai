@@ -9,7 +9,10 @@ export const Route = createFileRoute("/_authenticated/report/$id/success")({
   head: () => ({
     meta: [
       { title: "Report submitted — SafeReport AI" },
-      { name: "description", content: "Your incident report was submitted. Keep your tracking ID safe." },
+      {
+        name: "description",
+        content: "Your incident report was submitted. Keep your tracking ID safe.",
+      },
       { property: "og:title", content: "Report submitted — SafeReport AI" },
       { property: "og:description", content: "Track your case status any time." },
     ],
@@ -19,7 +22,10 @@ export const Route = createFileRoute("/_authenticated/report/$id/success")({
 
 function Success() {
   const { id } = Route.useParams();
-  const { data: incident } = useQuery({ queryKey: ["incident", id], queryFn: () => getIncident(id) });
+  const { data: incident } = useQuery({
+    queryKey: ["incident", id],
+    queryFn: () => getIncident(id),
+  });
 
   return (
     <AppShell>
@@ -36,9 +42,7 @@ function Success() {
           <p className="text-xs font-semibold uppercase tracking-wide text-accent-foreground">
             Tracking ID
           </p>
-          <p className="mt-1 font-display text-2xl font-semibold">
-            {incident?.tracking_id ?? "…"}
-          </p>
+          <p className="mt-1 font-display text-2xl font-semibold">{incident?.tracking_id ?? "…"}</p>
         </div>
 
         <Button asChild className="mt-6 h-12 w-full rounded-2xl shadow-float">
